@@ -24,9 +24,9 @@ public class Serveur {
                 ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                 oos.writeObject("Pong");
                 oos.flush();
-                //ois.close();
-                //oos.close();
-                //clientSocket.close();
+                ois.close();
+                oos.close();
+                clientSocket.close();
 
                 if (message.equalsIgnoreCase("exit")) {
                     break;
