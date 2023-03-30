@@ -8,7 +8,7 @@ import java.io.*;
 
 public class Serveur {
     public static void main(String[] args) {
-        int port = 12345;//
+        int port = 12345;
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
