@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import univ_lorraine.iut.java.privatechat.controller.Client;
 
 /**
  * JavaFX App
