@@ -8,7 +8,7 @@ public class Client {
     Socket socket = null;
     ObjectOutputStream oos = null;
     ObjectInputStream ois = null;
-public Client() throws UnknownHostException, IOException {
+    public Client() throws UnknownHostException, IOException {
         socket = new Socket(host.getHostName(), 12345);
         oos = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("Envoie d'une requête au serveur");
