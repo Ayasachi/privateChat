@@ -20,6 +20,7 @@ public class App extends Application {
         Client client = new Client("localhost", 12345);
         // Se connecter au serveur
         client.connect();
+        //
 
         scene = new Scene(loadFXML("login"), 640, 480);
         stage.setScene(scene);
