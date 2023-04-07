@@ -13,7 +13,7 @@
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="239.0" style="-fx-background-color: #008092;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="33.0" layoutY="21.0" prefHeight="192.0" prefWidth="225.0" text="privateChat" textFill="WHITE">
+            <Label layoutX="36.0" layoutY="47.0" prefHeight="176.0" prefWidth="254.0" text="privateChat" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="36.0" />
                </font>
