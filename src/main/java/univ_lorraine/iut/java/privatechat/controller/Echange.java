@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class Message implements Runnable {
+public class Echange implements Runnable {
+
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
 
-    public Message(Socket socket) {
+    public Echange(Socket socket) {
         super();
         this.socket = socket;
 
@@ -22,16 +22,17 @@ public class Message implements Runnable {
         try {
             this.ois = new ObjectInputStream(socket.getInputStream());
             this.oos = new ObjectOutputStream(socket.getOutputStream());
-            Scanner scanner = new Scanner(System.in);
-            String message = (String) ois.readObject();
-            System.out.println("Message reçu : " + message);
 
-            System.out.println("Saisie d'un message : ");
-            String message2 = scanner.nextLine();
-            oos.writeObject(message2);
+            String message = (String) ois.readObject();
+            System.out.println("Message Received: " + message);
+
+            oos.writeObject("Pong");
+
+
         } catch (Exception e) {
-            // On ne fait rien
+
         }
+
     }
 
     public void close() {
@@ -44,4 +45,5 @@ public class Message implements Runnable {
             e.printStackTrace();
         }
     }
+
 }
