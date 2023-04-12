@@ -2,33 +2,65 @@ package univ_lorraine.iut.java.privatechat.controller;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import java.security.*;
+import javax.crypto.interfaces.DHPublicKey;
+import java.math.*;
+import java.util.Arrays;
 
 public class Client {
-
     public static void main(String[] args) {
         try {
-            while(true) {
-                InetAddress host = InetAddress.getLocalHost();
-                Socket socket  = new Socket(host.getHostName(), 12345);
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream ois = null;
-                Scanner scanner = new Scanner(System.in);
+            // 1. Création d'un socket client et initialisation des flux
+            InetAddress host = InetAddress.getLocalHost();
+            Socket socket = new Socket(host.getHostName(), 12345);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-                System.out.println("Saisie d'un message : ");
-                oos.writeObject(scanner.nextLine());
-                oos.flush();
 
-                // On récupère le message du serveur
-                ois = new ObjectInputStream(socket.getInputStream());
-                String message2 = (String) ois.readObject();
-                System.out.println("Message reçu : " + message2);
+            // 2. Génération de la paire de clés Diffie-Hellman
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DH");
+            kpg.initialize(1024);
+            KeyPair kp = kpg.generateKeyPair();
+            Key publicKey = kp.getPublic();
+            Key privateKey = kp.getPrivate();
 
-                // On ferme la connexion
-                ois.close();
-                oos.close();
+            // 3. Envoi de la clé publique au serveur
+            out.writeObject(publicKey);
+            out.flush();
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            // 4. Réception de la clé publique du serveur
+            Key serverPublicKey = (Key)in.readObject();
+
+            if (serverPublicKey instanceof DHPublicKey) {
+                // 5. Génération de la clé secrète partagée
+                KeyAgreement ka = KeyAgreement.getInstance("DH");
+                ka.init(privateKey);
+                ka.doPhase(serverPublicKey, true);
+                byte[] secret = ka.generateSecret();
+
+                // 6. Création d'un objet Cipher pour chiffrer les messages avec la clé secrète partagée
+                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+                byte[] truncatedSecret = Arrays.copyOf(secret, 16);
+                SecretKeySpec secretKeySpec = new SecretKeySpec(truncatedSecret, "AES");
+                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+
+                // 7. Envoi des messages chiffrés au serveur
+                String message = "Bonjour";
+                byte[] encrypted = cipher.doFinal(message.getBytes());
+                out.writeObject(encrypted);
+                out.flush();
+            } else {
+                System.err.println("Clé publique invalide");
             }
-        } catch (IOException | ClassNotFoundException e) {
+
+            // 8. Fermeture des flux et du socket
+            out.close();
+            in.close();
+            socket.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
