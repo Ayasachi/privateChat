@@ -1,6 +1,9 @@
 package univ_lorraine.iut.java.privatechat.controller;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 import javafx.fxml.FXML;
@@ -38,7 +41,7 @@ public class LoginController {
     private boolean checkPassword(String login, String password) {
         try (BufferedReader reader = new BufferedReader(new FileReader(login + ".pwd"))) {
             String readLine = reader.readLine();
-            String requiredLine = "password=" + password;
+            String requiredLine = "password=" + hashPassword(password);
             if (requiredLine.equals(readLine)) {
                 return true;
             }
@@ -47,6 +50,29 @@ public class LoginController {
             return false;
         }
         return false;
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(encodedHash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 
@@ -88,7 +114,7 @@ public class LoginController {
         } else {
             // Créer le fichier contenant le mot de passe avec buffer Writer
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(passwordFile))) {
-                writer.write("password=" + password);
+                writer.write("password=" + hashPassword(password));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,3 +125,4 @@ public class LoginController {
 
     }
 }
+
