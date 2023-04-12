@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import univ_lorraine.iut.java.privatechat.controller.Client;
 
 /**
  * JavaFX App
@@ -18,12 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Client client = new Client("localhost", 12345);
-        // Se connecter au serveur
-        client.connect();
-
-
-        scene = new Scene(loadFXML("login"), 640, 480);
+        scene = new Scene(loadFXML("login"), 520, 400);
         stage.setScene(scene);
         stage.setTitle("PrivateChat");
         stage.show();
