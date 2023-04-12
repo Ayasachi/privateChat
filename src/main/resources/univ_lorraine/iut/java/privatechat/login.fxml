@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ_lorraine.iut.java.privatechat.controller.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="239.0" style="-fx-background-color: #008092;" BorderPane.alignment="CENTER">
          <children>
@@ -29,23 +28,23 @@
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="292.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="124.0" layoutY="138.0" />
-            <Label layoutX="14.0" layoutY="141.0" prefHeight="17.0" prefWidth="106.0" text="Nom d'utilisateur :">
+            <TextField fx:id="usernameField" layoutX="11.0" layoutY="140.0" />
+            <Label layoutX="11.0" layoutY="111.0" prefHeight="17.0" prefWidth="149.0" text="Nom d'utilisateur :">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="210.0" prefHeight="17.0" prefWidth="106.0" text="Mot de passe :">
+            <Label layoutX="11.0" layoutY="183.0" prefHeight="17.0" prefWidth="106.0" text="Mot de passe :">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button layoutX="10.0" layoutY="280.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="263.0" style="-fx-background-color: #008092;" text="Se connecter" textFill="WHITE">
+            <Button fx:id="loginButton" layoutY="280.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="263.0" style="-fx-background-color: #008092;" text="Se connecter" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <PasswordField layoutX="124.0" layoutY="207.0" />
+            <PasswordField fx:id="passwordField" layoutX="11.0" layoutY="215.0" />
          </children>
       </AnchorPane>
    </right>
