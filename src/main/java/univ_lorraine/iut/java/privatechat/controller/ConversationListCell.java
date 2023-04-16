@@ -1,28 +1,22 @@
 package univ_lorraine.iut.java.privatechat.controller;
 import javafx.scene.control.ListCell;
 
+import java.io.IOException;
 
-public class ConversationListCell extends ListCell<Conversation> {
 
-    public ConversationListCell() {
-        super();
-        this.setOnMouseClicked(event -> {
-            if (! this.isEmpty()) {
-                Contact contact = this.getItem().getContact();
-                String[] args = {contact.getPseudo(), contact.getIp(), contact.getPort().toString()};
-                Client.main(args);
-                ChatController.main(args);
+public class ConversationListCell extends ListCell<String> {
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty || item == null) {
+                setText(null);
+            } else {
+                setText(item);
+                setOnMouseClicked(event -> {
+                    System.out.println("L'élément " + item + " a été cliqué.");
+                    // Ajoutez ici le code que vous souhaitez exécuter lorsqu'un élément est cliqué
+                });
             }
-        });
-    }
-
-    @Override
-    public void updateItem(Conversation conversation, boolean empty) {
-        super.updateItem(conversation, empty);
-        if (empty) {
-            setText(null);
-        } else {
-            setText(conversation.getContact().getPseudo());
         }
-    }
 }

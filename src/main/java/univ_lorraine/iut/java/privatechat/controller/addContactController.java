@@ -36,8 +36,8 @@ public class addContactController {
     @FXML
     private void backToChat() throws IOException {
         //retourner au chat
-        App.setRoot("chat");
         App.setWindowSize(765,795);
+        App.setRoot("chat");
     }
 
     @FXML
