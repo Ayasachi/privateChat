@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import univ_lorraine.iut.java.privatechat.controller.dataController;
 import java.io.IOException;
 
 /**
@@ -13,7 +13,15 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    public static void setUser(String newUser) {
+        user = newUser;
+    }
+
+    public static String getUser() {
+        return user;
+    }
     private static Scene scene;
+    private static String user;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -27,10 +35,25 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
+    public static void setRoot(String fxml, Object data) throws IOException {
+        scene.setRoot(loadFXML(fxml,data));
+    }
+
+    private static Parent loadFXML(String fxml, Object data) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        Parent root = fxmlLoader.load();
+        if(data!=null &&
+                fxmlLoader.getController() instanceof dataController) {
+            ((dataController) fxmlLoader.getController()).setData(data);
+        }
+        return root;
+    }
+
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+
 
     public static void main(String[] args) {
         launch();
