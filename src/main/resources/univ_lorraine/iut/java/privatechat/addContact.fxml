@@ -38,8 +38,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="nameField" layoutX="174.0" layoutY="106.0" />
-            <TextField fx:id="ipField" layoutX="174.0" layoutY="58.0" />
+            <TextField fx:id="ipField" layoutX="174.0" layoutY="106.0" />
+            <TextField fx:id="nameField" layoutX="174.0" layoutY="58.0" />
             <TextField fx:id="portField" layoutX="174.0" layoutY="153.0" />
             <Button fx:id="Submit" layoutX="78.0" layoutY="261.0" onAction="#submit" mnemonicParsing="false" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #008092;" text="Ajout" textFill="WHITE">
                <font>

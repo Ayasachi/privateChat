@@ -13,6 +13,19 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    private static Scene scene;
+
+    private static String user;
+
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        scene = new Scene(loadFXML("login"), 620, 400);
+        stage.setScene(scene);
+        stage.setTitle("PrivateChat");
+        stage.show();
+    }
+
     public static void setUser(String newUser) {
         user = newUser;
     }
@@ -20,16 +33,11 @@ public class App extends Application {
     public static String getUser() {
         return user;
     }
-    private static Scene scene;
-    private static String user;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 520, 400);
-        stage.setScene(scene);
-        stage.setTitle("PrivateChat");
-        stage.show();
+    public static void setWindowSize(int width, int height) {
+        scene.getWindow().setWidth(width);
+        scene.getWindow().setHeight(height);
     }
+
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -38,9 +46,9 @@ public class App extends Application {
     public static void setRoot(String fxml, Object data) throws IOException {
         scene.setRoot(loadFXML(fxml,data));
     }
-
-    private static Parent loadFXML(String fxml, Object data) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+    private static Parent loadFXML(String fxml,Object data) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml +
+                ".fxml"));
         Parent root = fxmlLoader.load();
         if(data!=null &&
                 fxmlLoader.getController() instanceof dataController) {
@@ -54,9 +62,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-
     public static void main(String[] args) {
         launch();
     }
-
 }

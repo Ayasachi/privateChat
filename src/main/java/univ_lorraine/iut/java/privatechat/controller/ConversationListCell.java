@@ -1,12 +1,10 @@
 package univ_lorraine.iut.java.privatechat.controller;
-
 import javafx.scene.control.ListCell;
-import univ_lorraine.iut.java.privatechat.controller.Client;
-import univ_lorraine.iut.java.privatechat.controller.ChatController;
 
-public class listeConversaton extends ListCell<Conversation> {
 
-    public listeConversaton() {
+public class ConversationListCell extends ListCell<Conversation> {
+
+    public ConversationListCell() {
         super();
         this.setOnMouseClicked(event -> {
             if (! this.isEmpty()) {
